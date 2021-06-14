@@ -1,5 +1,4 @@
-clear all;
-filename = 'S005R04 T0.csv'; % 输入文件名，注意文件和代码路径
+filename = 'S005R04 T2.csv'; % 输入文件名，注意文件和代码路径
 x = readmatrix(filename);
 Fs = 160;%采样率
 nnum = size(x);%原始数据(对于S005R04 T0.csv  [10240,65] = [16*640，1+64])
@@ -38,7 +37,7 @@ plot(n, k_n(:,1));title('峭度');
 figure(2);
 plot(n, s_n(:,1));title('偏度');
 figure(4);
-plot(n, A_BP_n(:,1:64));title('Average Bandpower');
+plot(n, A_BP_n(:,1));title('Average Bandpower');
 
 %频域部分*******************************************************************
 F_x_n = zeros(event, num_sample, num_channel);
@@ -52,9 +51,9 @@ n2 = 0 : 1 : num_sample/2 - 1;
 n2 = 2*n2/len(2) * pi;
 figure(5);
 subplot(211);
-plot(n2/pi, abs( F_x_n(1,:,6)));title('Fast Fourier Transformer')
+plot(n2/pi, abs( F_x_n(5,:,8)));title('Fast Fourier Transformer')
 xlabel('\omega/\pi');
 subplot(212);
-plot(n2/pi/2*Fs, abs( F_x_n(1,:,6)));title('Fast Fourier Transformer')
+plot(n2/pi/2*Fs, abs( F_x_n(5,:,8)));title('Fast Fourier Transformer')
 xlabel('Hz');
 
