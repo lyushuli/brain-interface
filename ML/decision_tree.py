@@ -5,8 +5,8 @@ from sklearn.metrics import precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
 from data_process import get_dataset, data_pre, precision_cal, recall_cal
 
-test_time = 500
-for j in range(4):
+test_time = 1
+for j in range(20):
     print(j)
     x, y = get_dataset(j)
     x, y = data_pre(x, y)
@@ -18,11 +18,10 @@ for j in range(4):
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
         num_test = len(y_test)
         # 构建决策树
-        clf = tree.DecisionTreeClassifier()  # 建立决策树对象
+        clf = tree.DecisionTreeClassifier(max_depth=4, min_samples_leaf=5)  # 建立决策树对象
         clf.fit(x_train, y_train)  # 决策树拟合
-        # tree.plot_tree(clf)
-        # plt.show()
-        # 预测
+        tree.plot_tree(clf)
+        plt.show()
         y_test_pre = clf.predict(x_test)
         acc += sum(y_test_pre == y_test) / num_test  # accuracy
         precis += precision_cal(y_test, y_test_pre)  # precision

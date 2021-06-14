@@ -19,7 +19,7 @@ for j in range(4):
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
         num_test = len(y_test)
         # 创建knn类
-        knn = KNeighborsClassifier()
+        knn = KNeighborsClassifier(n_neighbors=7)
         # 训练knn
         knn.fit(x_train, y_train)
         y_test_pre = knn.predict(x_test)

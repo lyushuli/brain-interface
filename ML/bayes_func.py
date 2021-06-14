@@ -3,7 +3,7 @@ from sklearn.datasets import load_iris
 from sklearn.metrics import precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
-from data_process import get_dataset, data_pre, recall_cal, precision_cal
+from data_process import get_dataset, data_pre, recall_cal, precision_cal, data_2
 import numpy as np
 
 test_time = 500

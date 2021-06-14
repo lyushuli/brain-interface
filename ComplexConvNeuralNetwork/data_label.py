@@ -96,8 +96,6 @@ class ConvNeuralNetwork(torch.nn.Module):
         x = x.view(batch_size, 1, 8, 8)
         x = F.relu(self.conv1(x))
         x = self
-
-
         x = x.view(batch_size, -1)
         x = F.relu(self.linear1(x))
         x = self.linear2(x)
@@ -142,8 +140,8 @@ if __name__ == '__main__':
     #standard_data(file_path, file_path_pro)
     #get_dataset(file_path_pro, file_path_train, file_path_test)
 
-    #model = DeepNN()
-    model = ConvNeuralNetwork()
+    model = DeepNN()
+    # model = ConvNeuralNetwork()
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(params=model.parameters(), lr=0.001)
 

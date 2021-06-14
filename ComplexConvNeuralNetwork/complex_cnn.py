@@ -3,6 +3,8 @@ import torch.nn.functional as F
 
 from tensorboardX import SummaryWriter
 from data_label import generate_dataloader
+from sklearn import metrics
+from matplotlib import pyplot as plt
 
 
 class InceptionA(torch.nn.Module):
@@ -103,6 +105,7 @@ def train(epoch):
         loss_total = loss_total + loss.item()
     print('epoch=', epoch + 1, ',loss=', loss_total / batch_size)
     writer.add_scalar('loss', loss_total / batch_size, epoch + 1)
+    return loss_total/batch_size
 
 
 def test(epoch):
@@ -123,6 +126,7 @@ def test(epoch):
         precision_value = precision(mat)
         recall_value = recall(mat)
         show_result(precision_value, recall_value, mat)
+    return accuracy
 
 
 def confusion_matrix():
@@ -163,7 +167,7 @@ def recall(matrix):
 
 
 def f1_score(p, f):
-    return round( 2 * p * f / (p + f), 2)
+    return round(2 * p * f / (p + f), 2)
 
 
 def accuracy(classes, matrix):
@@ -177,7 +181,7 @@ def accuracy(classes, matrix):
 
 
 def show_result(precision, recall, matrix):
-    print('\t\t\t\t', 'precision', '\t', 'recall', '\t', 'F1_score')
+    print('\t\t', 'precision', '\t', 'recall', '\t', 'F1_score')
     for item in classes:
         print(item, '\t', precision[item], '\t', recall[item], '\t', f1_score(precision[item], recall[item]))
     print(matrix)
@@ -205,11 +209,23 @@ if __name__ == '__main__':
 
     train_data, test_data = generate_dataloader(file_path_train, file_path_test, size=batch_size)
 
+    loss_list = []
+    acc_list = []
     model.train()
     for i in range(epochs):
         model.train()
-        train(i)
+        loss_list.append(train(i))
         model.eval()
-        test(i)
+        acc_list.append(test(i))
 
+    plt.figure()
+    plt.plot(loss_list)
+    plt.xlabel("epoch")
+    plt.ylabel("loss")
+    plt.show()
+    plt.figure()
+    plt.plot(acc_list)
+    plt.xlabel("epoch")
+    plt.ylabel("accuracy")
+    plt.show()
     writer.close()
