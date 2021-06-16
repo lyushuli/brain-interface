@@ -83,25 +83,6 @@ class DeepNN(torch.nn.Module):
         return x
 
 
-class ConvNeuralNetwork(torch.nn.Module):
-    def __init__(self):
-        super(ConvNeuralNetwork, self).__init__()
-        self.conv1 = torch.nn.Conv2d(in_channels=1, out_channels=8, kernel_size=3, padding=1)
-        self.conv2 = torch.nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3, padding=1)
-        self.pool = torch.nn.MaxPool2d(2)
-        self.linear1 = torch.nn.Linear(in_features=256, out_features=64)
-        self.linear2 = torch.nn.Linear(in_features=64, out_features=3)
-
-    def forward(self, x):
-        x = x.view(batch_size, 1, 8, 8)
-        x = F.relu(self.conv1(x))
-        x = self
-        x = x.view(batch_size, -1)
-        x = F.relu(self.linear1(x))
-        x = self.linear2(x)
-        return x
-
-
 def train(epoch):
     for i, (inputs, labels) in enumerate(train_data, 0):
         y_pred = model(inputs)
